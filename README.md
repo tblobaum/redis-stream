@@ -1,14 +1,24 @@
 # redis-stream
 
+Create readable/writeable/pipeable [api compatible streams](http://nodejs.org/api/streams.html) from redis commands.
+
 [![Build Status](https://secure.travis-ci.org/tblobaum/redis-stream.png)](http://travis-ci.org/tblobaum/redis-stream)
 
 # Example
 
-In the `example` directory there are various streaming examples.
+In the `example` directory there are various ways to use `redis-stream` -- such as creating a stream from the redis `monitor` command.
 
-```js
+``` js
+var Redis = require('redis-stream')
+  , client = new Redis(6379, 'localhost')
 
-
+require('http')
+.createServer(function (request, response) {
+  var redis = client.stream()
+  redis.pipe(Redis.es.join('\r\n')).pipe(response)
+  redis.write('monitor')
+})
+.listen(3000)
 ```
 
 # Methods
@@ -22,7 +32,7 @@ var Redis = require('redis-stream')
 Return an object that streams can be created from with the `port`, `host`, and `database` options -- `port` defaults to `6379`, `host` to `localhsot` and `database` to `0`.
 
 ## client.stream([arg1] [, arg2] [, argn])
-Return a [node.js api compatible stream](http://nodejs.org/api/streams.html) that is readable, writeable, and can be piped. All calls to `write` on this stream will be prepended with the optional arguments passed to `client.stream`
+Return an instance of  that is readable, writeable, and can be piped. All calls to `write` on this stream will be prepended with the optional arguments passed to `client.stream`
 
 Create a streaming instance of rpop:
 
@@ -52,7 +62,7 @@ Return a stream that can be piped to to transform an `hmget` or `hgetall` stream
 It's possible to interact directly with the command parser that transforms a stream into valid redis data stream
 
 ``` js
-var Redis = require('../')
+var Redis = require('redis-stream')
   , redis = new Redis(6379, 'localhost')
   , stream = redis.stream()
 
@@ -68,6 +78,10 @@ stream.end()
 # Install
 
 `npm install redis-stream`
+
+# Tests
+
+`npm install -g tap && npm test`
 
 # License
 
