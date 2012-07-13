@@ -1,5 +1,5 @@
 var Redis = require('../')
-  , client = new Redis(6379, 'localhost', 2) // select database 2
+  , client = new Redis(6379, 'localhost')
   , lpush = client.stream('lpush', 'mylist')
 
 lpush.pipe(process.stdout)

@@ -13,6 +13,9 @@ rpush.on('end', function () {
   // reimplementation of rpoplpush with redis-stream
   // http://redis.io/commands/rpoplpush
   rpop = client.stream('rpop')
+
+  // rpop.pipe(myDestinationStream) // send rpopped elements here
+
   rpop
     .pipe(client.stream('lpush', 'myotherlist'))
     .pipe(process.stdout)
