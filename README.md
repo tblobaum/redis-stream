@@ -46,11 +46,23 @@ rpop.pipe(process.stdout)
 rpop.write('my-list-key')
 ```
 
-Which you can then pipe redis keys to, and they resulting elements will be piped to stdout.
+Or lpush:
 
-## Redis.parse.hgetall()
+``` js
+var lpush = client.stream('lpush', 'my-list-key')
+lpush.pipe(process.stdout)
+lpush.write('my-value')
+```
 
-Return a stream that can be piped to to transform an `hmget` or `hgetall` stream into valid json, with a little help from [JSONStream](https://github.com/dominictarr/JSONStream) we can turn this into a real object.
+Which you can then pipe redis keys to, and the resulting elements will be piped to stdout.
+
+Check the [examples](https://github.com/tblobaum/redis-stream/tree/master/example) directory for more. However, any [redis command](http://redis.io/commands) can be issued with the same arguments as the command line interface.
+
+## Other methods
+
+### Redis.parse.hgetall()
+
+Return a special intermediary stream that can be used to transform an `hmget` or `hgetall` stream into a json object with a little help from [JSONStream](https://github.com/dominictarr/JSONStream).
 
 ``` js
   hgetall = client.stream('hgetall')
@@ -62,7 +74,7 @@ Return a stream that can be piped to to transform an `hmget` or `hgetall` stream
   hgetall.write('my-hash-key-1')
 ```
 
-## Redis.parse(array)
+### Redis.parse(array)
 It's possible to interact directly with the command parser that transforms a stream into valid redis data stream
 
 ``` js
