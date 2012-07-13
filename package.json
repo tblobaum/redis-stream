@@ -1,0 +1,35 @@
+{
+  "name" : "redis-stream",
+  "version" : "0.1.0",
+  "description" : "create arbitrary node.js streams to and from redis",
+  "main" : "index.js",
+  "bin" : {},
+  "directories" : {
+    "example" : "example",
+    "test" : "test"
+  },
+  "dependencies" : {
+    "event-stream" : "~2.1.5"
+  },
+  "devDependencies" : {
+    "tap" : "~0.2.5"
+  },
+  "scripts" : {
+    "test" : "tap test/*.js"
+  },
+  "repository" : {
+    "type" : "git",
+    "url" : "git://github.com/tblobaum/redis-stream.git"
+  },
+  "homepage" : "https://github.com/tblobaum/redis-stream",
+  "keywords" : [
+    "redis",
+    "stream"
+  ],
+  "author" : {
+    "name" : "Thomas Blobaum",
+    "email" : "tblobaum@gmail.com",
+    "url" : "https://github.com/tblobaum/"
+  },
+  "license" : "MIT"
+}
