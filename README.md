@@ -1,6 +1,6 @@
 # redis-stream
 
-Create readable/writeable/pipeable [api compatible streams](http://nodejs.org/api/streams.html) from redis commands.
+Create readable/writeable/pipeable [api compatible streams](http://nodejs.org/api/stream.html) from redis commands.
 
 [![Build Status](https://secure.travis-ci.org/tblobaum/redis-stream.png)](http://travis-ci.org/tblobaum/redis-stream)
 
