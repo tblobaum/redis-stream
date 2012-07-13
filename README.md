@@ -29,10 +29,14 @@ var Redis = require('redis-stream')
 ```
 
 ## new Redis([port] [, host] [, database])
-Return an object that streams can be created from with the `port`, `host`, and `database` options -- `port` defaults to `6379`, `host` to `localhsot` and `database` to `0`.
+Return an object that streams can be created from with the `port`, `host`, and `database` options.
+
+* `port` defaults to `6379` 
+* `host` defaults to `localhsot` 
+* `database` defaults to `0`
 
 ## client.stream([arg1] [, arg2] [, argn])
-Return an instance of  that is readable, writeable, and can be piped. All calls to `write` on this stream will be prepended with the optional arguments passed to `client.stream`
+Return an instance of [stream](http://nodejs.org/api/streams.html). All calls to `write` on this stream will be prepended with the optional arguments passed to `client.stream()`
 
 Create a streaming instance of rpop:
 
