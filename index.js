@@ -50,7 +50,7 @@ Redis.prototype.stream = function (cmd, key, curry /* moar? */) {
   function replyParser (data, fn) {
     if (Redis.debug_mode) console.log('replyParser', data+'')
     var str = (data+'').replace(replace1, '').replace(replace2, '')
-    if (!str.length) return fn(null, [])
+    if (!str.length) return fn()
     else if (clip) {
       clip--
       return fn(null,[])
