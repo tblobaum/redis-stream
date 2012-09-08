@@ -59,6 +59,14 @@ test('Set_smembers', function (t) {
   Set_smembers.write(setName)
 })
 
+test('Set_smembers_key_not_exists', function (t) {
+  t.plan(1)
+  Set_smembers.on('data', function (data) {
+    t.ok(data==='', 'empty string reply should be returned')
+  })
+  Set_smembers.write('unknownkey')
+})
+
 test('Set_spop', function (t) {
   t.plan(2)
   Set_spop.on('data', function (data) {
