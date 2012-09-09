@@ -24,8 +24,9 @@ Redis.prototype.stream = function (cmd, key, curry /* moar? */) {
 
   concat = function (target, data) {
     target = target || []
-    data = data || []
-    if( typeof data === 'string' ) data = [data]
+    if(Object.prototype.toString.call(data)!=='[object Array]') {
+        data = [data]
+    }
     Array.prototype.push.apply(target, data)
     return target
   }
@@ -35,16 +36,9 @@ Redis.prototype.stream = function (cmd, key, curry /* moar? */) {
     , stream = es.pipe(
         es.pipe(
           es.map(function (data, fn) {
+            //accept arrays as data for `write`
               var elems = concat([], stream.curry)
-              //console.log('elems', elems)
-              concat(elems, data)
-              //console.log('elems2', elems)
-              return Redis.parse(elems, fn)
-              var elems = [].concat(stream.curry)
-                , str = data+''
-              if (!str.length) return fn()
-              else elems.push(str)
-              // console.log('write', str)
+              elems = concat(elems, data)
               return Redis.parse(elems, fn)
             }), 
           _redis
