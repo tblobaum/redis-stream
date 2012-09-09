@@ -37,8 +37,7 @@ Redis.prototype.stream = function (cmd, key, curry /* moar? */) {
         es.pipe(
           es.map(function (data, fn) {
             //accept arrays as data for `write`
-              var elems = concat([], stream.curry)
-              elems = concat(elems, data)
+              var elems = concat(stream.curry, data)
               return Redis.parse(elems, fn)
             }), 
           _redis
