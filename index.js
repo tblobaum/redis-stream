@@ -22,22 +22,15 @@ Redis.prototype.createConnection = function () {
 
 Redis.prototype.stream = function (cmd, key, curry /* moar? */) {
 
-  concat = function (target, data) {
-    target = target || []
-    if(Object.prototype.toString.call(data)!=='[object Array]') {
-        data = [data]
-    }
-    Array.prototype.push.apply(target, data)
-    return target
-  }
   var curry = Array.prototype.slice.call(arguments)
     , clip = 1
     , _redis = this.createConnection()
     , stream = es.pipe(
         es.pipe(
           es.map(function (data, fn) {
-            //accept arrays as data for `write`
-              var elems = concat(stream.curry, data)
+              //accept arrays as data for `write`
+              var elems = concat([], stream.curry)
+              elems = concat(elems, data)
               return Redis.parse(elems, fn)
             }), 
           _redis
@@ -52,6 +45,16 @@ Redis.prototype.stream = function (cmd, key, curry /* moar? */) {
   stream.redis = _redis
   stream.redis.write(Redis.parse([ 'select', this.db ]))
   return stream
+
+  //presumably faster than Array.concat
+  function concat (target, data) {
+    target = target || []
+    if(Object.prototype.toString.call(data)!=='[object Array]') {
+        data = [data]
+    }
+    Array.prototype.push.apply(target, data)
+    return target
+  }
 
   function replyParser (data, fn) {
     if (Redis.debug_mode) console.log('replyParser', data+'')
